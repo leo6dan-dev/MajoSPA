@@ -273,6 +273,112 @@ footer {
     margin-top: 2rem;
     font-size: .85rem;
 }
+        /* CALENDARIO DE CITAS */
+.calendario-box {
+    background-color: #FFFFFF;
+    border: 1px solid #E8C7BA;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    padding: 1.5rem;
+    max-width: 340px;
+    margin: 2rem auto 0;
+    font-size: 0.9rem;
+    color: #4a3a2b;
+}
+
+.cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.cal-header-title {
+    text-align: center;
+    font-weight: 600;
+    color: #8B5E3C;
+    font-size: 1rem;
+    letter-spacing: -0.03em;
+}
+
+.cal-nav-btn {
+    background-color: #7A8B74;
+    color: #fff;
+    border: none;
+    border-radius: .5rem;
+    font-size: .8rem;
+    padding: .4rem .6rem;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+}
+.cal-nav-btn:active {
+    transform: scale(.97);
+}
+
+.cal-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: .7rem;
+    font-weight: 600;
+    color: #8B5E3C;
+    margin-bottom: .5rem;
+}
+
+.cal-weekdays div {
+    padding: .4rem 0;
+    background-color: #F9F6F1;
+    border-radius: .4rem;
+    border: 1px solid #E8C7BA;
+}
+
+.cal-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    gap: .4rem;
+}
+
+.cal-day {
+    background-color: #FDFBF8;
+    border: 1px solid #E8C7BA;
+    border-radius: .6rem;
+    padding: .6rem 0;
+    font-size: .8rem;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.03);
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cal-day.disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.cal-day.selected {
+    background-color: #7A8B74;
+    border-color: #7A8B74;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Texto bajo el calendario */
+.calendario-info {
+    text-align: center;
+    font-size: .8rem;
+    color: #4a3a2b;
+    line-height: 1.4;
+    margin-top: 1rem;
+}
+
+.calendario-info strong {
+    color: #8B5E3C;
+}
+
 
 /* RESPONSIVE */
 @media (max-width: 600px) {
@@ -450,6 +556,45 @@ footer {
                 </a>
             </div>
         </div>
+        <div class="calendario-box">
+    <div class="cal-header">
+        <button class="cal-nav-btn" id="prevMes">&lt;</button>
+        <div class="cal-header-title" id="calTitulo">Mes Año</div>
+        <button class="cal-nav-btn" id="nextMes">&gt;</button>
+    </div>
+
+    <div class="cal-weekdays">
+        <div>Lu</div>
+        <div>Ma</div>
+        <div>Mi</div>
+        <div>Ju</div>
+        <div>Vi</div>
+        <div>Sa</div>
+        <div>Do</div>
+    </div>
+
+    <div class="cal-days" id="calDias">
+        <!-- aquí van los días por JS -->
+    </div>
+
+    <div class="calendario-info">
+        <div id="fechaSeleccionadaTexto">
+            Selecciona tu fecha ideal 📅
+        </div>
+        <div style="margin-top:.5rem;">
+            Luego escríbenos por WhatsApp con el día escogido y tu barrio 📲
+        </div>
+        <a id="whatsappLink"
+   class="btn-whatsapp"
+   style="margin-top:1rem; display:inline-block; font-size:.8rem; padding:.6rem .8rem; min-width:auto;"
+   href="https://wa.me/573008618142?text=Hola%20quiero%20agendar%20una%20cita%20de%20masaje"
+   target="_blank" rel="noopener noreferrer">
+    Enviar mi fecha por WhatsApp
+</a>
+
+    </div>
+</div>
+        
     </section>
 
     <!-- ZONA / COBERTURA -->
@@ -481,6 +626,122 @@ footer {
         <p>📲 300 861 8142 · 📷 @majomasaje17</p>
         <p>© 2025 Masajes Majo · Bienestar para tu cuerpo y mente</p>
     </footer>
+<script>
+    // Calendario interactivo con WhatsApp dinámico
+    const calDias = document.getElementById('calDias');
+    const calTitulo = document.getElementById('calTitulo');
+    const prevMesBtn = document.getElementById('prevMes');
+    const nextMesBtn = document.getElementById('nextMes');
+    const fechaSeleccionadaTexto = document.getElementById('fechaSeleccionadaTexto');
+    const whatsappLink = document.getElementById('whatsappLink');
+
+    let hoy = new Date(); // fecha actual
+    let mesActual = hoy.getMonth(); // 0-11
+    let añoActual = hoy.getFullYear(); // ej 2025
+    let fechaSeleccionada = null; // guardamos la última fecha elegida
+
+    function renderCalendario() {
+        // Nombres de los meses en español
+        const meses = [
+            "Enero","Febrero","Marzo","Abril","Mayo","Junio",
+            "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
+        ];
+
+        // Actualizamos el título del calendario (Ej: "Octubre 2025")
+        calTitulo.textContent = `${meses[mesActual]} ${añoActual}`;
+
+        // Limpiamos lo que había en los días
+        calDias.innerHTML = "";
+
+        // Día de la semana del primer día del mes
+        const primerDia = new Date(añoActual, mesActual, 1);
+        let startWeekday = primerDia.getDay(); // 0=Dom,1=Lun,...
+        // Ajustar para que Lunes sea la 1ra columna
+        startWeekday = (startWeekday === 0) ? 6 : startWeekday - 1;
+
+        // Cuántos días tiene este mes
+        const diasEnMes = new Date(añoActual, mesActual + 1, 0).getDate();
+
+        // Rellenar huecos vacíos al inicio
+        for (let i = 0; i < startWeekday; i++) {
+            const emptyCell = document.createElement('div');
+            emptyCell.classList.add('cal-day', 'disabled');
+            emptyCell.textContent = "";
+            calDias.appendChild(emptyCell);
+        }
+
+        // Crear cada día del mes
+        for (let diaNum = 1; diaNum <= diasEnMes; diaNum++) {
+            const celda = document.createElement('div');
+            celda.classList.add('cal-day');
+            celda.textContent = diaNum;
+
+            const fechaDeEsteDia = new Date(añoActual, mesActual, diaNum);
+
+            // Bloquear días pasados del mes actual
+            const esHoy = new Date();
+            const esPasado =
+                fechaDeEsteDia < new Date(esHoy.getFullYear(), esHoy.getMonth(), esHoy.getDate()) &&
+                mesActual === esHoy.getMonth() &&
+                añoActual === esHoy.getFullYear();
+
+            if (esPasado) {
+                celda.classList.add('disabled');
+            } else {
+                // Cuando hago clic en un día disponible
+                celda.addEventListener('click', () => {
+                    // quitar selección previa
+                    document.querySelectorAll('.cal-day').forEach(d => d.classList.remove('selected'));
+
+                    // marcar este día
+                    celda.classList.add('selected');
+
+                    // guardar fecha seleccionada
+                    const dd = String(diaNum).padStart(2,'0');
+                    const mm = String(mesActual + 1).padStart(2,'0');
+                    const fechaBonita = `${dd}/${mm}/${añoActual}`;
+
+                    fechaSeleccionada = fechaBonita;
+
+                    // Mostrar texto debajo del calendario
+                    fechaSeleccionadaTexto.innerHTML = `Elegiste <strong>${fechaBonita}</strong> 💆‍♀️<br>Escríbenos por WhatsApp para confirmar tu hora.`;
+
+                    // Actualizar el enlace de WhatsApp con la fecha
+                    // Nota: encodeURIComponent para que los espacios y tildes no rompan el link
+                    const mensaje = `Hola quiero agendar una cita de masaje el ${fechaBonita} a domicilio. Estoy en [TU UBICACION].`;
+                    const numero = "573008618142"; // tu número en formato internacional sin +
+                    const url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensaje);
+
+                    whatsappLink.href = url;
+                });
+            }
+
+            calDias.appendChild(celda);
+        }
+    }
+
+    // Botones para cambiar de mes
+    prevMesBtn.addEventListener('click', () => {
+        mesActual--;
+        if (mesActual < 0) {
+            mesActual = 11;
+            añoActual--;
+        }
+        renderCalendario();
+    });
+
+    nextMesBtn.addEventListener('click', () => {
+        mesActual++;
+        if (mesActual > 11) {
+            mesActual = 0;
+            añoActual++;
+        }
+        renderCalendario();
+    });
+
+    // Primera render
+    renderCalendario();
+</script>
 
 </body>
 </html>
