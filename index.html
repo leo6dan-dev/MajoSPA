@@ -5,72 +5,550 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masajes Majo - Relajación a Domicilio</title>
     <style>
-        * {box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", Roboto, sans-serif;}
-        body {background-color: #fffaf8; color: #333; line-height: 1.6;}
-        header {background-color: #f7c9c9; padding: 1.5rem; text-align: center; color: #3d3d3d;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: sticky; top: 0;}
-        header h1 {font-size: 1.8rem; font-weight: 700; color: #963e5b;}
-        nav {margin-top: 0.75rem;}
-        nav a {margin: 0 10px; color: #3d3d3d; text-decoration: none; font-weight: 500;}
-        nav a:hover {color: #b14e6f;}
-        section {max-width: 1100px; margin: 2rem auto; padding: 1rem 2rem;}
-        section h2 {text-align: center; color: #b14e6f; margin-bottom: 1rem; font-size: 1.8rem;}
-        .hero {background: linear-gradient(to bottom right, #fbd3e9, #f7c9c9); text-align: center;
-                padding: 3rem 1rem; border-radius: 1rem; box-shadow: 0 20px 60px rgba(0,0,0,0.15);}
-        .hero h2 {font-size: 2rem; color: #963e5b; margin-bottom: 1rem;}
-        .hero p {max-width: 700px; margin: auto; line-height: 1.5;}
-        .btn-whatsapp {display: inline-block; background-color: #25D366; color: #fff; padding: 0.8rem 1.2rem;
-                        border-radius: 0.5rem; text-decoration: none; font-weight: 600; margin-top: 1.5rem;}
-        .btn-whatsapp:hover {background-color: #1ebe5c;}
-        footer {text-align: center; padding: 2rem 1rem; background-color: #f7c9c9; color: #3d3d3d;}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background-color: #fffaf8;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #f7c9c9;
+            padding: 1.5rem;
+            text-align: center;
+            color: #3d3d3d;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: #963e5b;
+        }
+
+        nav {
+            margin-top: 0.75rem;
+        }
+
+        nav a {
+            margin: 0 10px;
+            color: #3d3d3d;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: #b14e6f;
+        }
+
+        section {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 1rem 2rem;
+        }
+
+        section h2 {
+            text-align: center;
+            color: #b14e6f;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            letter-spacing: -0.03em;
+        }
+
+        /* HERO / INICIO */
+        .hero {
+            background: linear-gradient(to bottom right, #fbd3e9, #f7c9c9);
+            color: #3d3d3d;
+            text-align: center;
+            padding: 3rem 1rem 3.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .hero h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #963e5b;
+            letter-spacing: -0.03em;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            max-width: 700px;
+            margin: 0.5rem auto 1.5rem;
+            line-height: 1.5;
+        }
+
+        .hero-info {
+            font-size: 0.95rem;
+            color: #4a4a4a;
+            line-height: 1.4;
+        }
+
+        .tag-row {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: .5rem;
+            font-size: .8rem;
+        }
+
+        .chip {
+            background: rgba(255,255,255,0.5);
+            border: 1px solid rgba(0,0,0,0.08);
+            padding: .4rem .75rem;
+            border-radius: .5rem;
+            color: #3d3d3d;
+            font-weight: 500;
+        }
+
+        .btn-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-whatsapp,
+        .btn-reservar {
+            text-decoration: none;
+            display: inline-block;
+            min-width: 180px;
+            padding: 0.9rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: center;
+            transition: transform 0.15s ease;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: #fff;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .btn-reservar {
+            background-color: #b14e6f;
+            color: #fff;
+        }
+
+        .btn-reservar:hover {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        /* SOBRE NOSOTROS */
+        .about-box {
+            background: #fff;
+            border-radius: 1rem;
+            padding: 1.5rem 1.5rem 2rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.07);
+            border: 1px solid #f1d3d8;
+            color: #4a4a4a;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-box p {
+            margin-bottom: 1rem;
+        }
+
+        .about-highlight {
+            background-color: #fff5f7;
+            border: 1px solid #f1d3d8;
+            border-radius: .75rem;
+            padding: 1rem;
+            font-size: .9rem;
+            color: #963e5b;
+            font-weight: 500;
+        }
+
+        /* SERVICIOS */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+
+        .service-card {
+            background: #fff;
+            padding: 1.25rem 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid #f1d3d8;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            color: #b14e6f;
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .service-card p {
+            font-size: 0.9rem;
+            color: #4a4a4a;
+            line-height: 1.4;
+            margin-bottom: .5rem;
+        }
+
+        .price-time {
+            font-size: 0.85rem;
+            color: #963e5b;
+            font-weight: 600;
+        }
+
+        .nota-precio {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #555;
+            margin-top: 1rem;
+        }
+
+        /* RESERVAS / FLUJO */
+        .reserva-wrapper {
+            background-color: #fff5f7;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border: 1px solid #f1d3d8;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .reserva-wrapper h3 {
+            color: #963e5b;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            letter-spacing: -0.03em;
+        }
+
+        .pasos-reserva {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .paso-card {
+            background: #fff;
+            border: 1px solid #f1d3d8;
+            border-radius: .75rem;
+            padding: 1rem;
+            font-size: .9rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .paso-num {
+            color: #963e5b;
+            font-weight: 600;
+            font-size: .8rem;
+            margin-bottom: .3rem;
+        }
+
+        .paso-text {
+            color: #4a4a4a;
+            font-size: .9rem;
+            line-height: 1.4;
+        }
+
+        .recordatorio-box {
+            background-color: #fff;
+            border-radius: .75rem;
+            padding: 1rem;
+            font-size: .9rem;
+            line-height: 1.4;
+            border: 1px solid #f1d3d8;
+            color: #4a4a4a;
+        }
+
+        .recordatorio-box strong {
+            color: #963e5b;
+        }
+
+        .recordatorio-ejemplo {
+            background-color: #fffaf8;
+            border-left: 4px solid #b14e6f;
+            padding: .75rem 1rem;
+            font-size: .85rem;
+            color: #4a4a4a;
+            margin-top: .75rem;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        /* COBERTURA */
+        .zona-box {
+            background: #fff;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.07);
+            border: 1px solid #f1d3d8;
+            color: #4a4a4a;
+            text-align: center;
+        }
+
+        .zona-box p {
+            margin-bottom: .7rem;
+        }
+
+        /* CONTACTO */
+        .contact-box {
+            background: #fff;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.07);
+            border: 1px solid #f1d3d8;
+            text-align: center;
+            color: #4a4a4a;
+        }
+
+        .contact-box p {
+            margin-bottom: .5rem;
+        }
+
+        .contact-strong {
+            color: #963e5b;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            background-color: #f7c9c9;
+            color: #3d3d3d;
+            margin-top: 2rem;
+            font-size: .85rem;
+        }
+
+        footer p {
+            line-height: 1.4;
+        }
+
+        /* RESPONSIVE NAV SMALL */
+        @media (max-width: 600px){
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: .5rem;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- HEADER / NAV -->
     <header>
         <h1>Masajes Majo</h1>
         <nav>
             <a href="#inicio">Inicio</a>
             <a href="#nosotros">Nosotros</a>
             <a href="#servicios">Servicios</a>
+            <a href="#reservar">Reservar</a>
+            <a href="#zona">Cobertura</a>
             <a href="#contacto">Contacto</a>
         </nav>
     </header>
 
+    <!-- INICIO / HERO -->
     <section id="inicio" class="hero">
         <h2>Relájate, respira y deja que el spa llegue a tu casa</h2>
-        <p>Masajes relajantes a domicilio en Papayal y alrededores.<br>Bienestar físico y mental sin salir de casa.</p>
-        <a class="btn-whatsapp" href="https://wa.me/573008618142?text=Hola%20quiero%20agendar%20una%20cita%20de%20masaje%20a%20domicilio" target="_blank">
-            📲 Reservar por WhatsApp
-        </a>
+
+        <p>
+            Masajes relajantes a domicilio con atención en Papayal y alrededores.
+            Bienestar físico y mental sin salir de tu espacio.
+        </p>
+
+        <div class="hero-info">
+            <p>📲 WhatsApp: <strong>300 861 8142</strong></p>
+            <p>📷 Instagram: <strong>@majomasaje17</strong></p>
+        </div>
+
+        <div class="tag-row">
+            <div class="chip">Masajes relajantes</div>
+            <div class="chip">Descontracturante</div>
+            <div class="chip">Piedras calientes</div>
+            <div class="chip">Cuidado personalizado</div>
+        </div>
+
+        <div class="btn-row">
+            <a class="btn-whatsapp" href="https://wa.me/573008618142?text=Hola%20quiero%20agendar%20una%20cita%20de%20masaje%20a%20domicilio" target="_blank" rel="noopener noreferrer">
+                Reservar por WhatsApp
+            </a>
+            <a class="btn-reservar" href="#reservar">
+                Ver cómo agendar
+            </a>
+        </div>
     </section>
 
+    <!-- NOSOTROS -->
     <section id="nosotros">
         <h2>Sobre Nosotros</h2>
-        <p>Masajes Majo ofrece terapias de relajación y masajes a domicilio, adaptados a tus necesidades.
-           Nos especializamos en crear un ambiente tranquilo con aromaterapia, música suave y atención personalizada.</p>
+        <div class="about-box">
+            <p>
+                Masajes Majo es un servicio de masajes relajantes a domicilio pensado para personas que necesitan bajar el estrés, aliviar tensión muscular y tener un momento de bienestar sin salir de casa.
+            </p>
+            <p>
+                Trabajamos con técnicas de relajación, aromaterapia y ambiente tranquilo (música suave, esencias, toallas limpias) para que sientas una experiencia tipo spa directamente en tu hogar.
+            </p>
+            <div class="about-highlight">
+                Atención personalizada • Trato profesional • Ambiente de calma
+            </div>
+        </div>
     </section>
 
+    <!-- SERVICIOS -->
     <section id="servicios">
-        <h2>Servicios</h2>
-        <ul>
-            <li><strong>Masaje Relajante:</strong> 60 min · $80.000 COP</li>
-            <li><strong>Masaje Descontracturante:</strong> 45 min · $70.000 COP</li>
-            <li><strong>Piedras Calientes:</strong> 60 min · $90.000 COP</li>
-            <li><strong>Momento Majo (Premium):</strong> 90 min · $150.000 COP</li>
-        </ul>
-        <p style="margin-top:1rem; font-size:0.9rem;">* El valor puede variar según la distancia desde Papayal.</p>
+        <h2>Servicios y Precios</h2>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Masaje Relajante</h3>
+                <p>Masaje de cuerpo completo con presión suave/media para reducir estrés, ansiedad y cansancio general. Ideal para descanso mental.</p>
+                <div class="price-time">60 min · $80.000 COP</div>
+            </div>
+
+            <div class="service-card">
+                <h3>Masaje Descontracturante</h3>
+                <p>Enfocado en espalda, cuello y hombros. Alivia tensión acumulada por malas posturas, cargar peso o dormir mal.</p>
+                <div class="price-time">45 min · $70.000 COP</div>
+            </div>
+
+            <div class="service-card">
+                <h3>Masaje con Piedras Calientes</h3>
+                <p>Terapia con calor profundo para relajar músculos y mejorar la circulación. Sensación de descanso inmediato.</p>
+                <div class="price-time">60 min · $90.000 COP</div>
+            </div>
+
+            <div class="service-card">
+                <h3>Paquete “Momento Majo”</h3>
+                <p>90 minutos de experiencia completa: masaje relajante + aromaterapia + estiramientos suaves + toque facial relajante.</p>
+                <div class="price-time">90 min · $150.000 COP</div>
+            </div>
+        </div>
+
+        <p class="nota-precio">
+            * El valor puede variar según la distancia desde Papayal.
+        </p>
     </section>
 
+    <!-- RESERVAR -->
+    <section id="reservar">
+        <h2>Reserva tu Cita</h2>
+
+        <div class="reserva-wrapper">
+            <h3>¿Cómo agendar tu masaje a domicilio?</h3>
+
+            <div class="pasos-reserva">
+                <div class="paso-card">
+                    <div class="paso-num">Paso 1</div>
+                    <div class="paso-text">
+                        Escoge el servicio que deseas (relajante, descontracturante, piedras calientes, etc.).
+                    </div>
+                </div>
+
+                <div class="paso-card">
+                    <div class="paso-num">Paso 2</div>
+                    <div class="paso-text">
+                        Envíanos un mensaje por WhatsApp al <strong>300 861 8142</strong> con: servicio, fecha, hora y tu ubicación.
+                    </div>
+                </div>
+
+                <div class="paso-card">
+                    <div class="paso-num">Paso 3</div>
+                    <div class="paso-text">
+                        Te confirmamos disponibilidad y te damos el valor total (incluyendo desplazamiento si aplica).
+                    </div>
+                </div>
+
+                <div class="paso-card">
+                    <div class="paso-num">Paso 4</div>
+                    <div class="paso-text">
+                        ¡Listo! Guardamos tu cita y la dejamos programada.
+                    </div>
+                </div>
+            </div>
+
+            <div class="recordatorio-box">
+                <strong>Recordatorio automático</strong><br>
+                Antes de tu masaje, recibirás un mensaje de recordatorio por WhatsApp. Ese recordatorio incluye:
+                <ul style="margin-top:.5rem; padding-left:1.2rem;">
+                    <li>Hora de la cita</li>
+                    <li>Servicio que elegiste</li>
+                    <li>Recomendaciones (toalla limpia, espacio cómodo)</li>
+                </ul>
+
+                <div class="recordatorio-ejemplo">
+                    “Hola 💆‍♀️ Este es tu recordatorio de Masajes Majo. Tu masaje relajante está agendado hoy a las 6:00 pm. Prepara un lugar cómodo donde podamos trabajar. ¡Nos vemos pronto!”
+                </div>
+            </div>
+
+            <div class="btn-row" style="margin-top:2rem;">
+                <a class="btn-whatsapp" href="https://wa.me/573008618142?text=Hola%20quiero%20agendar%20una%20cita%20de%20masaje%20a%20domicilio%20para%20[FECHA]%20a%20las%20[HORA]%20en%20[UBICACION]" target="_blank" rel="noopener noreferrer">
+                    Reservar ahora por WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ZONA / COBERTURA -->
+    <section id="zona">
+        <h2>Zona de Atención</h2>
+
+        <div class="zona-box">
+            <p><strong>📍 Servicio a domicilio con cita previa</strong></p>
+            <p>Atendemos en Papayal y alrededores.</p>
+            <p>Dependiendo de la distancia, puede aplicar un costo adicional por desplazamiento.</p>
+        </div>
+    </section>
+
+    <!-- CONTACTO -->
     <section id="contacto">
         <h2>Contacto</h2>
-        <p>📲 WhatsApp: 300 861 8142</p>
-        <p>📷 Instagram: @majomasaje17</p>
-        <p>📍 Papayal y alrededores</p>
-        <p>© 2025 Masajes Majo · Bienestar para tu cuerpo y mente</p>
+
+        <div class="contact-box">
+            <p><span class="contact-strong">WhatsApp:</span> 300 861 8142</p>
+            <p><span class="contact-strong">Instagram:</span> @majomasaje17</p>
+            <p><span class="contact-strong">Horario:</span> Solo con cita previa</p>
+            <p><span class="contact-strong">Tipo de servicio:</span> Masajes relajantes a domicilio</p>
+        </div>
     </section>
 
     <footer>
-        <p>Masajes Majo · Relajación a domicilio · Papayal</p>
+        <p><strong>Masajes Majo</strong> · Relajación a domicilio</p>
+        <p>Papayal y alrededores</p>
+        <p>📲 300 861 8142 · 📷 @majomasaje17</p>
+        <p>© 2025 Masajes Majo · Bienestar para tu cuerpo y mente</p>
     </footer>
+
 </body>
 </html>
+
