@@ -361,14 +361,17 @@
                 gap: .5rem;
             }
         }
-        .hero-top-img {
-    width: 100%;
+      .hero-top-img {
+    width: 85%;
     max-height: 280px;
-    object-fit: cover;
+    object-fit: contain; /* muestra toda la imagen sin recortarla */
     border-radius: 1rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-    margin-bottom: 1.5rem;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    margin: 0 auto 1rem; /* centra y da espacio abajo */
+    display: block;
+    background-color: #fff; /* por si la imagen tiene fondo transparente */
 }
+
     </style>
 </head>
 <body>
